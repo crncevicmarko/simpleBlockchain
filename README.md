@@ -23,9 +23,9 @@ This repository contains a basic implementation of a blockchain in Go. The block
 1. Ensure you have [Go](https://golang.org/dl/) installed on your machine.
 2. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/simple-blockchain.git
-   cd simple-blockchain
-
+   git clone https://github.com/crncevicmarko/simpleBlockchain.git
+   cd simpleBlockchain
+   
 ## How to Run
 
 To run the blockchain program, make sure you are positioned in the `simpleBlockchain` directory in terminal. Then, use the following command:
