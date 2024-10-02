@@ -26,3 +26,9 @@ This repository contains a basic implementation of a blockchain in Go. The block
    git clone https://github.com/yourusername/simple-blockchain.git
    cd simple-blockchain
 
+## How to Run
+
+To run the blockchain program, make sure you are positioned in the `simpleBlockchain` directory in terminal. Then, use the following command:
+
+```bash
+go run main.go block.go
