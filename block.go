@@ -1,9 +1,7 @@
 package main
 
 import (
-	"bytes"
-	"crypto/sha256"
-	"strconv"
+	"log"
 	"time"
 )
 
@@ -16,23 +14,19 @@ type Block struct {
 	Data          []byte
 	PrevBlockHash []byte
 	Hash          []byte
-}
-
-//	we need to set hash value for the bloch entity
-//
-// we will do it if we set timestamp, data and prevBlockHash atributtes in header and we hash it
-func (b *Block) SetHash() {
-	timestamp := []byte(strconv.FormatInt(b.TimeStamp, 10))                       // convert timestamp to byte slice(like string of digits)
-	headers := bytes.Join([][]byte{b.PrevBlockHash, b.Data, timestamp}, []byte{}) // join all atributes in headers variable
-	hash := sha256.Sum256(headers)                                                // hash header with sum256 func
-
-	b.Hash = hash[:] // set hash value to Hash atribute
+	Nonce         int
 }
 
 func NewBlock(data string, prevBlockHash []byte) *Block {
-	block := &Block{time.Now().Unix(), []byte(data), prevBlockHash, []byte{}} // create new instance of the object Block with atributes
-	block.SetHash()                                                           // set hash value for object Block
-	return block                                                              // return new objeck with set hash value
+	block := &Block{time.Now().Unix(), []byte(data), prevBlockHash, []byte{}, 0} // create new instance of the object Block with atributes
+	pow := NewProofOfWork(block)
+
+	nonce, hash := pow.Run()
+	block.Nonce = nonce
+	block.Hash = hash
+	log.Print("Pow: ", pow)
+
+	return block // return new objeck with set hash value
 }
 
 func (bc *BlockChain) AddBlock(data string) {
