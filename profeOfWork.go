@@ -13,16 +13,21 @@ var (
 	maxNonce = math.MaxInt64
 )
 
-const targetBits = 24 // how much 0 needs to be infront the hased value of block
+const targetBits = 25 // how much 0 needs to be infront the hased value of block
 
 type ProofOfWork struct {
 	block  *Block
 	target *big.Int
 }
 
+// constructor fro the proof of work
+// we need to specify the target and set it in the new instance of ProofOfWork object
 func NewProofOfWork(b *Block) *ProofOfWork {
 	target := big.NewInt(1)
+	log.Println("Target1: ", target)
+
 	target.Lsh(target, uint(256-targetBits))
+	log.Println("Target2: ", target)
 
 	pow := &ProofOfWork{b, target}
 
@@ -57,7 +62,7 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 	var hash [32]byte // sha256.Sum256(data) returns the [32]byte array
 	nonce := 0
 
-	log.Println("Mining the block containing \"%s\"\n", pow.block.Data)
+	log.Println("Mining the block containing \"%s\"\n", string(pow.block.Data))
 
 	for nonce < maxNonce {
 		//we need for every value of nonce to check if the int representation of hash value of the block with that nonce gives the lesser value of target number
@@ -73,6 +78,9 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 		//if hash is less than break
 		//else increment the nonce
 		if hashInt.Cmp(pow.target) == -1 {
+			// log.Println("Hash: ", hash)
+			// log.Println("Hash Intiger: ", hashInt)
+			// log.Println("Target: ", pow.target)
 			break
 		} else {
 			nonce++

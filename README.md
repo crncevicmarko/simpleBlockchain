@@ -9,14 +9,20 @@ This repository contains a basic implementation of a blockchain in Go. The block
   - `Data`: The information stored in the block.
   - `PrevBlockHash`: A hash of the previous block, ensuring the integrity of the chain.
   - `Hash`: The hash of the current block, calculated based on its contents.
+  - `Nonce`: A number used in the proof-of-work algorithm to find a valid hash.
 
-- **Blockchain Structure**: 
+- **Blockchain Structure**:
   - A blockchain consists of multiple blocks linked together.
   - The first block is known as the Genesis block.
+  - Each block is mined using a proof-of-work mechanism.
 
-- **Hashing**: 
+- **Proof of Work**:
+  - Implements a proof-of-work algorithm to secure the blockchain.
   - Uses the SHA-256 hashing algorithm to generate a hash for each block.
-  - The hash is calculated from the block's timestamp, data, and the previous block's hash.
+  - The hash is calculated from the block's timestamp, data, previous block's hash, and nonce.
+
+- **Validation**:
+  - Each block can be validated to ensure its hash is less than the target, verifying its integrity.
 
 ## Installation
 
@@ -25,10 +31,10 @@ This repository contains a basic implementation of a blockchain in Go. The block
    ```bash
    git clone https://github.com/crncevicmarko/simpleBlockchain.git
    cd simpleBlockchain
-   
+
 ## How to Run
 
 To run the blockchain program, make sure you are positioned in the `simpleBlockchain` directory in terminal. Then, use the following command:
 
 ```bash
-go run main.go block.go
+go run main.go block.go profeOfWork.go
